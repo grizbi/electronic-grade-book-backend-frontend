@@ -2,6 +2,7 @@ package com.example.electronicgradebook.controller;
 
 import com.example.electronicgradebook.configuration.security.AuthenticationRequest;
 import com.example.electronicgradebook.configuration.security.AuthenticationResponse;
+import com.example.electronicgradebook.dto.SpecialStudentsDto;
 import com.example.electronicgradebook.repository.ElectronicGradeBookRepository;
 import com.example.electronicgradebook.resources.User;
 import com.example.electronicgradebook.util.JwtUtil;
@@ -27,10 +28,17 @@ public class ElectronicGradeBookController {
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
-    @RequestMapping(path="/average-class-grade")
+
+    @RequestMapping(path = "/special-students")
+    public ResponseEntity<SpecialStudentsDto> getSpecialStudents() {
+        return ResponseEntity.ok(MathUtil.getSpecialStudents(electronicGradeBookRepository.findAll()));
+    }
+
+    @RequestMapping(path = "/average-class-grade")
     public ResponseEntity<Double> getAverageGradeForClass() {
         return ResponseEntity.ok(MathUtil.getAverageGradeForClass(electronicGradeBookRepository.findAll()));
     }
+
     @RequestMapping(path = "/students-total")
     public ResponseEntity<Integer> getNumberOfEnrolledStudents() {
         List<User> listOfAllUsers = electronicGradeBookRepository.findAll();
