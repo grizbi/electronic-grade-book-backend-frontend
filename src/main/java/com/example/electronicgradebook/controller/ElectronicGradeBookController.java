@@ -6,7 +6,7 @@ import com.example.electronicgradebook.dto.SpecialStudentsDto;
 import com.example.electronicgradebook.repository.ElectronicGradeBookRepository;
 import com.example.electronicgradebook.resources.User;
 import com.example.electronicgradebook.util.JwtUtil;
-import com.example.electronicgradebook.util.MathUtil;
+import com.example.electronicgradebook.util.StudentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,15 +29,25 @@ public class ElectronicGradeBookController {
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
+    @RequestMapping(path = "/total-marks")
+    public ResponseEntity<Integer> getTotalOfMarks() {
+        return ResponseEntity.ok(StudentUtil.getTotalOfMarks(electronicGradeBookRepository.findAll()));
+    }
+
+    @RequestMapping(path = "/highest-grade")
+    public ResponseEntity<Double> getHighestGrade() {
+        return ResponseEntity.ok(StudentUtil.getAverageGradeForStudent(
+                StudentUtil.getStudentWithHighestAverageGrade(electronicGradeBookRepository.findAll())));
+    }
 
     @RequestMapping(path = "/special-students")
     public ResponseEntity<SpecialStudentsDto> getSpecialStudents() {
-        return ResponseEntity.ok(MathUtil.getSpecialStudents(electronicGradeBookRepository.findAll()));
+        return ResponseEntity.ok(StudentUtil.getSpecialStudents(electronicGradeBookRepository.findAll()));
     }
 
     @RequestMapping(path = "/average-class-grade")
     public ResponseEntity<Double> getAverageGradeForClass() {
-        return ResponseEntity.ok(MathUtil.getAverageGradeForClass(electronicGradeBookRepository.findAll()));
+        return ResponseEntity.ok(StudentUtil.getAverageGradeForClass(electronicGradeBookRepository.findAll()));
     }
 
     @RequestMapping(path = "/students-total")
@@ -67,9 +78,9 @@ public class ElectronicGradeBookController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt, role));
     }
 
-    @RequestMapping("/users")
-    public List<User> getUsers() {
-        return electronicGradeBookRepository.findAll();
+    @RequestMapping("/students")
+    public List<User> getAllStudents() {
+        return StudentUtil.getAllStudents(electronicGradeBookRepository.findAll());
     }
 
     @RequestMapping(path = "users/{id}", method = RequestMethod.DELETE)
@@ -88,7 +99,10 @@ public class ElectronicGradeBookController {
     }
 
     @RequestMapping(path = "/users/{id}", method = RequestMethod.PUT)
-    public void updateUser(@PathVariable long id, @RequestBody User user) {
-        electronicGradeBookRepository.save(user);
+    public void updateUser(@RequestBody User data) {
+        Optional<User> userToBeEdited = electronicGradeBookRepository.findById(data.getId());
+        userToBeEdited.ifPresent((user) -> StudentUtil.overrideUserWithNewData(user, data));
+
+        electronicGradeBookRepository.save(userToBeEdited.get());
     }
 }

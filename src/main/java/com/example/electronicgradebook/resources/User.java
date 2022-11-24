@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String name;
     private String surname;
-    private String grades;
+    private String marks;
 
     public Long getId() {
         return id;
@@ -57,11 +57,11 @@ public class User {
         this.surname = surname;
     }
 
-    public String getGrades() {
-        return grades;
+    public String getMarks() {
+        return marks;
     }
 
-    public void setGrades(String grades) {
-        this.grades = grades;
+    public void setMarks(String grades) {
+        this.marks = grades;
     }
 }
