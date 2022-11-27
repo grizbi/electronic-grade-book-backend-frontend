@@ -26,6 +26,7 @@ public class MyUserPrincipal implements UserDetails {
 
         if (user.getEmail().equals("admin")) {
             grantedAuthorities.add(new SimpleGrantedAuthority(ADMIN_AUTHORITY));
+            grantedAuthorities.add(new SimpleGrantedAuthority(USER_AUTHORITY));
             return grantedAuthorities;
         }
         grantedAuthorities.add(new SimpleGrantedAuthority(USER_AUTHORITY));

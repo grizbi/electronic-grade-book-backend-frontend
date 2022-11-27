@@ -128,7 +128,7 @@ public class StudentUtil {
         for (String mark : marks) {
             averageStudentGrade += Double.parseDouble(mark);
         }
-        return averageStudentGrade / marks.length;
+        return trimNumberTo2Decimals(averageStudentGrade / marks.length);
     }
 
     public static double trimNumberTo2Decimals(Double number) {
