@@ -119,10 +119,15 @@ public class StudentUtil {
     }
 
     private static List<User> getEligibleStudentsForAverageGradeCalculation(List<User> students) {
-        return students.stream().filter(student -> student.getMarks() != null).collect(Collectors.toList());
+        return students.stream().filter(student -> student.getMarks() != null && !student.getMarks().isBlank())
+                .collect(Collectors.toList());
     }
 
     public static double getAverageGradeForStudent(User user) {
+        if(user.getMarks() == null || user.getMarks().isEmpty()) {
+            return 0.0;
+        }
+
         String[] marks = user.getMarks().split(",");
         double averageStudentGrade = 0.0;
         for (String mark : marks) {
