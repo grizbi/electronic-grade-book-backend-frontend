@@ -1,25 +1,42 @@
 package com.example.electronicgradebook.util;
 
 import com.example.electronicgradebook.dto.SpecialStudentsDto;
+import com.example.electronicgradebook.dto.StudentAverageGradeDto;
 import com.example.electronicgradebook.resources.User;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StudentUtil {
+
 
     private StudentUtil() {
 
     }
 
+    public static List<StudentAverageGradeDto> getListOfAverageGradeForAllStudents(List<User> students) {
+        List<User> eligibleStudentsForAverageGradeCalculation = getEligibleStudentsForAverageGradeCalculation(students);
+
+        List<StudentAverageGradeDto> studentsAverageGrade = new ArrayList<>();
+
+        eligibleStudentsForAverageGradeCalculation.forEach(student -> {
+                    studentsAverageGrade.add(
+                            StudentAverageGradeDto.builder()
+                                    .averageGrade(getAverageGradeForStudent(student))
+                                    .name(student.getName())
+                                    .surname(student.getSurname())
+                                    .build());
+                }
+        );
+
+        return studentsAverageGrade;
+    }
+
     public static Integer getTotalOfMarks(List<User> students) {
         students = getEligibleStudentsForAverageGradeCalculation(students);
         int total = 0;
-        for(User student : students) {
+        for (User student : students) {
             String[] marks = student.getMarks().split(",");
             total += marks.length;
         }
@@ -124,7 +141,7 @@ public class StudentUtil {
     }
 
     public static double getAverageGradeForStudent(User user) {
-        if(user.getMarks() == null || user.getMarks().isEmpty()) {
+        if (user.getMarks() == null || user.getMarks().isEmpty()) {
             return 0.0;
         }
 
