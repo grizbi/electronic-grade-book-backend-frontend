@@ -14,6 +14,21 @@ public class StudentUtil {
     private StudentUtil() {
     }
 
+    public static List<StudentDto> getStudentsDto(List<User> students) {
+        students = getAllStudents(students);
+        List<StudentDto> studentDtos = new ArrayList<>();
+        students.forEach(student -> {
+            studentDtos.add(
+                    StudentDto.builder()
+                            .name(student.getName())
+                            .surname(student.getSurname())
+                            .marks(student.getMarks())
+                            .build());
+
+        });
+        return studentDtos;
+    }
+
     public static StudentDto getStudentDto(User student) {
         return StudentDto.builder().
                 name(student.getName())

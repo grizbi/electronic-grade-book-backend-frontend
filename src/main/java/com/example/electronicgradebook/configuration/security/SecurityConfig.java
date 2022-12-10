@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll()
                 .and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/students", "/students-total", "/total-marks", "/special-students", "/students-average-grade").hasAuthority(ADMIN_AUTHORITY)
+                .authorizeRequests().antMatchers(HttpMethod.GET, "/students", "/students-total", "/total-marks", "/special-students", "/students-average-grade", "/marks-students").hasAuthority(ADMIN_AUTHORITY)
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ADMIN_AUTHORITY)
                 .and()

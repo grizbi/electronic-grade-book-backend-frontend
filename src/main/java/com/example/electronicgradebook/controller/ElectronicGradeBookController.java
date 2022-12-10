@@ -31,6 +31,13 @@ public class ElectronicGradeBookController {
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
+
+    @RequestMapping(path = "/marks-students")
+    public ResponseEntity<List<StudentDto>> getMarksForEveryStudent() {
+        return ResponseEntity.ok(StudentUtil.getStudentsDto(electronicGradeBookRepository.findAll()));
+    }
+
+
     @RequestMapping(path = "/marks-student/{email}")
     public ResponseEntity<StudentDto> getMarksForStudent(@PathVariable String email) {
         return ResponseEntity.ok(StudentUtil.getStudentDto(electronicGradeBookRepository.findByEmail(email)));
