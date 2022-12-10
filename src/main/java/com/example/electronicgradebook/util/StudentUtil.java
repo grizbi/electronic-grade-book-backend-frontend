@@ -2,6 +2,7 @@ package com.example.electronicgradebook.util;
 
 import com.example.electronicgradebook.dto.SpecialStudentsDto;
 import com.example.electronicgradebook.dto.StudentAverageGradeDto;
+import com.example.electronicgradebook.dto.StudentDto;
 import com.example.electronicgradebook.resources.User;
 
 import java.text.DecimalFormat;
@@ -10,9 +11,15 @@ import java.util.stream.Collectors;
 
 public class StudentUtil {
 
-
     private StudentUtil() {
+    }
 
+    public static StudentDto getStudentDto(User student) {
+        return StudentDto.builder().
+                name(student.getName())
+                .surname(student.getSurname())
+                .marks(student.getMarks())
+                .build();
     }
 
     public static List<StudentAverageGradeDto> getListOfAverageGradeForAllStudents(List<User> students) {

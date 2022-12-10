@@ -4,6 +4,7 @@ import com.example.electronicgradebook.configuration.security.AuthenticationRequ
 import com.example.electronicgradebook.configuration.security.AuthenticationResponse;
 import com.example.electronicgradebook.dto.SpecialStudentsDto;
 import com.example.electronicgradebook.dto.StudentAverageGradeDto;
+import com.example.electronicgradebook.dto.StudentDto;
 import com.example.electronicgradebook.repository.ElectronicGradeBookRepository;
 import com.example.electronicgradebook.resources.User;
 import com.example.electronicgradebook.util.JwtUtil;
@@ -29,6 +30,11 @@ public class ElectronicGradeBookController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+
+    @RequestMapping(path = "/marks-student/{email}")
+    public ResponseEntity<StudentDto> getMarksForStudent(@PathVariable String email) {
+        return ResponseEntity.ok(StudentUtil.getStudentDto(electronicGradeBookRepository.findByEmail(email)));
+    }
 
     @RequestMapping(path = "/students-average-grade")
     public ResponseEntity<List<StudentAverageGradeDto>> getAverageGradeForAllStudents() {
