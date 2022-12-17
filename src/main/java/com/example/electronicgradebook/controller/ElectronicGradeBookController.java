@@ -6,6 +6,8 @@ import com.example.electronicgradebook.dto.SpecialStudentsDto;
 import com.example.electronicgradebook.dto.StudentAverageGradeDto;
 import com.example.electronicgradebook.dto.StudentDto;
 import com.example.electronicgradebook.repository.ElectronicGradeBookRepository;
+import com.example.electronicgradebook.repository.NewsRepository;
+import com.example.electronicgradebook.resources.News;
 import com.example.electronicgradebook.resources.User;
 import com.example.electronicgradebook.util.JwtUtil;
 import com.example.electronicgradebook.util.StudentUtil;
@@ -26,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ElectronicGradeBookController {
 
+    private final NewsRepository newsRepository;
     private final ElectronicGradeBookRepository electronicGradeBookRepository;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
@@ -125,4 +128,22 @@ public class ElectronicGradeBookController {
 
         electronicGradeBookRepository.save(userToBeEdited.get());
     }
+
+    @RequestMapping(path = "/news", method = RequestMethod.POST)
+    public ResponseEntity<News> addNews(@RequestBody News news) {
+        newsRepository.save(news);
+        return new ResponseEntity<>(news, HttpStatus.OK);
+    }
+
+    @RequestMapping("/news")
+    public List<News> getAllNews() {
+        return newsRepository.findAll();
+    }
+
+    @RequestMapping(path = "news/{id}", method = RequestMethod.DELETE)
+    public void deleteNews(@PathVariable long id) {
+        newsRepository.deleteById(id);
+    }
+
+
 }
