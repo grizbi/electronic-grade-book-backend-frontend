@@ -1,9 +1,9 @@
 package com.example.electronicgradebook.resources;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 public class News {
@@ -12,6 +12,9 @@ public class News {
     private Long id;
     private String title;
     private String message;
+    @CreationTimestamp
+    @Column(name="date", nullable = false, updatable = false, insertable = false)
+    private Timestamp date;
 
     public Long getId() {
         return id;
@@ -25,6 +28,7 @@ public class News {
         return title;
     }
 
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -35,5 +39,13 @@ public class News {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 }
