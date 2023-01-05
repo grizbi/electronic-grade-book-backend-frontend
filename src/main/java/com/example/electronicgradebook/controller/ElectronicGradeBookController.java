@@ -7,7 +7,9 @@ import com.example.electronicgradebook.dto.StudentAverageGradeDto;
 import com.example.electronicgradebook.dto.StudentDto;
 import com.example.electronicgradebook.repository.ElectronicGradeBookRepository;
 import com.example.electronicgradebook.repository.NewsRepository;
+import com.example.electronicgradebook.repository.PrivateMessageRepository;
 import com.example.electronicgradebook.resources.News;
+import com.example.electronicgradebook.resources.PrivateMessage;
 import com.example.electronicgradebook.resources.User;
 import com.example.electronicgradebook.util.JwtUtil;
 import com.example.electronicgradebook.util.StudentUtil;
@@ -30,6 +32,7 @@ public class ElectronicGradeBookController {
 
     private final NewsRepository newsRepository;
     private final ElectronicGradeBookRepository electronicGradeBookRepository;
+    private final PrivateMessageRepository privateMessageRepository;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
@@ -145,5 +148,14 @@ public class ElectronicGradeBookController {
         newsRepository.deleteById(id);
     }
 
+    @RequestMapping(path = "/message", method = RequestMethod.POST)
+    public PrivateMessage addMessage(@RequestBody PrivateMessage message) {
+        return privateMessageRepository.save(message);
+    }
+
+    @RequestMapping(path = "/message/{email}", method = RequestMethod.GET)
+    public PrivateMessage getMessageByReceiver(@PathVariable String email) {
+        return privateMessageRepository.findByReceiver(email);
+    }
 
 }

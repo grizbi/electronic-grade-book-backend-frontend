@@ -7,13 +7,31 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 @Entity
-public class News {
+public class PrivateMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     private String title;
     private String message;
+    private String sender;
+    private String receiver;
     private Timestamp date = new Timestamp(System.currentTimeMillis());
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 
     public Long getId() {
         return id;
