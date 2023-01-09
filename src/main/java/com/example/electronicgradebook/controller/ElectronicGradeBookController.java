@@ -154,7 +154,7 @@ public class ElectronicGradeBookController {
     }
 
     @RequestMapping(path = "/message/{email}", method = RequestMethod.GET)
-    public PrivateMessage getMessageByReceiver(@PathVariable String email) {
+    public List<PrivateMessage> getMessagesByReceiver(@PathVariable String email) {
         return privateMessageRepository.findByReceiver(email);
     }
 

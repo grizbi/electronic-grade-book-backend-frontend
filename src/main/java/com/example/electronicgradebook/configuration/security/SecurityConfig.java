@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll()
                 .and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/students", "/students-total", "/total-marks", "/special-students", "/students-average-grade", "/marks-students").hasAuthority(ADMIN_AUTHORITY)
+                .authorizeRequests().antMatchers(HttpMethod.GET, "/students-total", "/total-marks", "/special-students", "/students-average-grade", "/marks-students").hasAuthority(ADMIN_AUTHORITY)
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.PUT, "/users/**").hasAuthority(ADMIN_AUTHORITY)
                 .and()
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers(HttpMethod.POST, "/news").hasAuthority(ADMIN_AUTHORITY)
                 .and()
-                .authorizeRequests().antMatchers(HttpMethod.GET, "/highest-grade", "/average-class-grade").hasAuthority(USER_AUTHORITY)
+                .authorizeRequests().antMatchers(HttpMethod.GET, "/students", "/highest-grade", "/average-class-grade").hasAuthority(USER_AUTHORITY)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

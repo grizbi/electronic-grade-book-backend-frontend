@@ -13,7 +13,6 @@ import static com.example.electronicgradebook.util.Values.ADMIN_AUTHORITY;
 import static com.example.electronicgradebook.util.Values.USER_AUTHORITY;
 
 public class MyUserPrincipal implements UserDetails {
-    private static final String ROLE_PREFIX = "ROLE_";
     private User user;
 
     public MyUserPrincipal(User user) {
