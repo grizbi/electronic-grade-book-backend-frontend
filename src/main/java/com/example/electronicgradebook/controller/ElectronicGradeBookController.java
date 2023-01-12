@@ -158,4 +158,9 @@ public class ElectronicGradeBookController {
         return privateMessageRepository.findByReceiver(email);
     }
 
+    @RequestMapping(path = "message/{id}", method = RequestMethod.DELETE)
+    public void deleteMessage(@PathVariable long id) {
+        privateMessageRepository.deleteById(id);
+    }
+
 }
